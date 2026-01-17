@@ -1,11 +1,21 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import './App.css'
 import AlertMessage from './Alert-Message'
+import { useOvershootVision } from '../hooks/overshoot'
 
 function App() {
   const [videoFile, setVideoFile] = useState<File | null>(null)
   const [videoUrl, setVideoUrl] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const { message, startVision, clearVision } = useOvershootVision()
+
+  // Auto-play video when message is received
+  useEffect(() => {
+    if (message && videoRef.current && videoRef.current.paused) {
+      videoRef.current.play()
+    }
+  }, [message])
 
   const handleVideoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
@@ -16,6 +26,7 @@ function App() {
         // Create a URL for the video preview
         const url = URL.createObjectURL(file)
         setVideoUrl(url)
+        startVision(file)
       } else {
         alert('Please upload a valid video file')
       }
@@ -28,6 +39,7 @@ function App() {
 
   const handleClearVideo = () => {
     setVideoFile(null)
+    clearVision()
     if (videoUrl) {
       URL.revokeObjectURL(videoUrl)
       setVideoUrl(null)
@@ -71,12 +83,13 @@ function App() {
           <h2>Video Preview</h2>
           <div className="video-container">
             <video
+              ref={videoRef}
               src={videoUrl}
               controls
               width="100%"
               style={{ maxWidth: '800px', borderRadius: '8px' }}
             />
-            <AlertMessage />
+            <AlertMessage message={message ?? 'No message provided'} />
           </div>
           <button onClick={handleClearVideo} className="clear-button">
             Clear Video

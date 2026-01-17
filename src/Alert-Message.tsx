@@ -2,12 +2,12 @@ import './AlertMessage.css'
 
 interface AlertMessageProps {
   title?: string;
-  message?: string;
+  message: string;
 }
 
 function AlertMessage({
   title = "🚨 Emergency Alert",
-  message = "This is a placeholder message that displays over the video. Emergency services have been notified. Help is on the way. Stay calm and follow safety protocols."
+  message = "No message provided"
 }: AlertMessageProps) {
   return (
     <div className="message-overlay">
