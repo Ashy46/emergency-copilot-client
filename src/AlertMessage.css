@@ -1,0 +1,51 @@
+.message-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.message-box {
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+  border: 2px solid rgba(100, 108, 255, 0.35);
+  border-radius: 12px;
+  padding: 1.5rem;
+  max-width: 90%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  pointer-events: auto;
+  animation: fadeIn 0.3s ease-in;
+}
+
+.message-box h3 {
+  margin: 0 0 0.75rem 0;
+  color: #ff6b6b;
+  font-size: 1.3rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.message-box p {
+  margin: 0;
+  color: #ffffff;
+  line-height: 1.6;
+  font-size: 1rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
